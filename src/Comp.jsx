@@ -55,8 +55,8 @@ const SpeechToText = () => {
 
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen backdrop-blur-2xl bg-amber-50 text-white p-8">
-      <h1 className="text-4xl mb-8 font-bold text-slate-800"> Speech Recognition</h1>
+    <div className="flex flex-col items-center justify-center min-h-screen backdrop-blur-2xl bg-slate-800 text-white p-8">
+      <h1 className="text-4xl mb-8 font-bold text-white"> Speech Recognition</h1>
 
       <div className="bg-gray-800 rounded-2xl p-6 w-full max-w-xl shadow-xl">
         <p className="text-lg min-h-[120px] border-2 border-gray-700 rounded-md p-4">
