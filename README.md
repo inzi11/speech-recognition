@@ -11,7 +11,7 @@ tailwindCSS
 
 1. Clone the Repo
 
-git clone https://github.com/your-username/speech-recognition.git
+git clone https://github.com/inzi11/speech-recognition.git
 cd speech-to-text-app
 
 2. Install Dependencies
