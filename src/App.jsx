@@ -1,12 +1,11 @@
 import './App.css'
-import Dictaphone from './Comp'
-
+import SpeechToText from "./SpeechToText"
 function App() {
 
   return (
     <>
       <div>
-        <Dictaphone />
+        <SpeechToText />
         </div>
     </>
   )
