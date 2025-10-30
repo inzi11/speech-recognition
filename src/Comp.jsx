@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import SpeechRecognition, { useSpeechRecognition } from "react-speech-recognition";
 
 const SpeechToText = () => {
@@ -6,47 +6,81 @@ const SpeechToText = () => {
     transcript,
     listening,
     resetTranscript,
+    isMicrophoneAvailable,
     browserSupportsSpeechRecognition,
   } = useSpeechRecognition();
 
+  const [isListening, setIsListening] = useState(false);
 
   useEffect(() => {
-    console.log("🎧 Transcript:", transcript);
+    console.log("Transcript:", transcript);
   }, [transcript]);
+
+  if (!isMicrophoneAvailable) {
+    return (
+      <p> 
+        please give access of the microphone
+      </p>
+    )
+  }
 
   if (!browserSupportsSpeechRecognition) {
     return (
-      <p className="text-center text-red-400 mt-10">
-        Oops! Your browser doesn’t support speech recognition 😿
+      <p>
+        Browser does not support Speech Recognition
       </p>
-    );
+    )
   }
 
+
+  function handleListening() {
+  
+    // here im handling the listening 
+    setIsListening(prev => {
+      const newState = !prev
+
+       if (newState) {
+      console.log("starting listening");
+      SpeechRecognition.startListening({ continuous: true, language: "en-US" });
+    } else {
+      console.log("stopping listening");
+      SpeechRecognition.stopListening();
+      }
+    
+      
+      return newState
+    });
+    
+}
+
+
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 text-white p-8">
-      <h1 className="text-3xl mb-6 font-bold">(≧▽≦)/ Speech Recognition Demo</h1>
+    <div className="flex flex-col items-center justify-center min-h-screen backdrop-blur-2xl bg-amber-50 text-white p-8">
+      <h1 className="text-4xl mb-8 font-bold text-slate-800"> Speech Recognition</h1>
 
       <div className="bg-gray-800 rounded-2xl p-6 w-full max-w-xl shadow-xl">
-        <p className="text-lg min-h-[120px] border border-gray-700 rounded-md p-4 leading-relaxed whitespace-pre-line">
-          {transcript || "Start speaking and watch magic happen 🎤✨"}
+        <p className="text-lg min-h-[120px] border-2 border-gray-700 rounded-md p-4">
+          {transcript || "Click on Listen button to start listening"}
         </p>
       </div>
 
       <div className="mt-6 flex gap-4">
-        <button
-          onClick={() =>
-            SpeechRecognition.startListening({ continuous: true, language: "en-US" })
-          }
-          className="bg-green-500 hover:bg-green-600 px-6 py-2 rounded-lg text-white"
+        { isListening ?
+          <button
+          onClick={handleListening}
+          className="bg-red-500 hover:bg-red-700 px-6 py-2 rounded-lg text-white font-semibold"
         >
-          Start
-        </button>
-        <button
-          onClick={SpeechRecognition.stopListening}
-          className="bg-red-500 hover:bg-red-600 px-6 py-2 rounded-lg text-white"
+          Stop 
+        </button> : 
+          
+           <button
+          onClick={handleListening}
+          className="bg-green-500 hover:bg-green-700 px-6 py-2 rounded-lg font-semibold text-white"
         >
-          Stop
+          Listen
         </button>
+        
+        }
         <button
           onClick={resetTranscript}
           className="bg-gray-600 hover:bg-gray-700 px-6 py-2 rounded-lg text-white"
@@ -56,7 +90,7 @@ const SpeechToText = () => {
       </div>
 
       <p className="mt-4 text-sm text-gray-400">
-        {listening ? "Listening... 👂 (✿◕‿◕)/" : "Stopped ❌"}
+        {listening ? "Listening... " : "Stopped "}
       </p>
     </div>
   );
