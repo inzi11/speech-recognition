@@ -1,0 +1,1 @@
+I decleare that i've not used any of the existing LLM or code generation tools, though i did get the reference from documentation provided about by the react-speech-recognition on the official npm page. 
